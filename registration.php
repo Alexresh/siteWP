@@ -45,6 +45,6 @@ if($pass!=$cpass){
   <input type="submit" value="зарегистрироваться">
 </form>
 
-
+<a href="/">Назад</a>
   </body>
 </html>

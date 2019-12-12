@@ -9,7 +9,7 @@
       echo "Такой пользователь не найден!";
       exit();
     }
-    setcookie('useremail',$user['email'],time()+3600,"/");
+    setcookie('userid',$user['id'],time()+3600,"/");
     setcookie('username',$user['name'],time()+3600,"/");
     header('Location: /');
   }
@@ -26,5 +26,6 @@
       <input type="password" name="pass"><br>
       <input type="submit" value="Войти">
     </form>
+    <a href="/">Назад</a>
   </body>
 </html>

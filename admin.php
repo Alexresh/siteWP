@@ -1,7 +1,7 @@
 <?php
 require 'db.php';
-$email=$_COOKIE["useremail"];
-$q=mysqli_query($link,"SELECT * FROM `users` WHERE `email`='$email' AND `isAdmin`='1'");
+$email=$_COOKIE["userid"];
+$q=mysqli_query($link,"SELECT * FROM `users` WHERE `id`='$userid' AND `isAdmin`='1'");
 $user=mysqli_fetch_assoc($q);
 if(count($user)==0):
   header("Location: /");
@@ -13,6 +13,7 @@ else:?>
     <title>Админ-панель</title>
   </head>
   <body>
+    <a href="/">Назад</a><br>
     <div style="float:left;padding: 10px; border:1px black solid;">
       <p>Добавление товара:</p>
       <form action="admin.php" method="post">
@@ -27,6 +28,19 @@ else:?>
         <p style="font-size:15px">1-Экшен; 2-Аркады; 3-Симуляторы; 4-Стратегии;<br> 5-Приключения; 6-Музыкальные игры; <br>7-Ролевые игры; 8-Головоломки</p>
         <input type="submit" value="Добавить игру">
       </form>
+      <form action="admin.php" method="post" enctype="multipart/form-data">
+        <p>Загрузка картинки на сайт:</p>
+        <input type="file" name="upload">
+        <button>Загрузить</button>
+      </form>
+      <?php
+        $filePath  = $_FILES['upload']['tmp_name'];
+        if(isset($filePath)){
+          if (!move_uploaded_file($filePath, __DIR__ . '/img/' . $_FILES['upload']['name'])) {
+            die('При записи изображения на диск произошла ошибка.');
+          }
+        }
+      ?>
     </div>
     <?php
       if (isset($_POST["name"])) {
@@ -72,6 +86,7 @@ else:?>
         }
         ?>
     </div>
+
   </body>
 </html>
 <?php endif; ?>

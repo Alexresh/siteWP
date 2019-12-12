@@ -26,7 +26,7 @@
                 echo "<li>Здравствуйте, " . $_COOKIE['username'] . "</li>";
               }
              ?>
-            <li><a href="#"><i class="large material-icons left">shopping_cart</i> </a> </li>
+            <li><a href="mycart.php"><i class="large material-icons left">shopping_cart</i> </a> </li>
             <li><a href="login.php"><i class="large material-icons left">account_circle</i> </a> </li>
             <li><a href="registration.php"><i class="large material-icons left">account_circle</i> </a></li>
           </ul>
@@ -76,6 +76,10 @@
               </div>
               <div class="card-content">
                 <p><?php $game['smallDescriptions']?> Цена - <?php echo $game['price']?></p>
+                <form action="addtocart.php" method="post">
+                  <input type="hidden" name="gameid" value="<?php echo $game['id']; ?>">
+                  <input type="submit" value="В корзину">
+                </form>
               </div>
             </div>
           </div>
@@ -93,10 +97,10 @@
       <script type="text/javascript" src="js/materialize.min.js"></script>
 
       <?php
-        $email=$_COOKIE["useremail"];
-        if(isset($email)){
+        $userid=$_COOKIE["userid"];
+        if(isset($userid)){
         echo '<a href="logout.php">Выйти</a> <br>';
-        $q=mysqli_query($link,"SELECT * FROM `users` WHERE `email`='$email' AND `isAdmin`='1'");
+        $q=mysqli_query($link,"SELECT * FROM `users` WHERE `id`='$userid' AND `isAdmin`='1'");
         $user=mysqli_fetch_assoc($q);
         if(count($user)!=0)
           echo '<a href="admin.php">Админ-панель</a>';

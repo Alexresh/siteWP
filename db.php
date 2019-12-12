@@ -9,7 +9,7 @@ $db=null;
 $db=mysqli_query($link,"SELECT MAX(`price`)AS `MAX` FROM `games`");
 $maxprice=mysqli_fetch_assoc($db)['MAX'];
 if((isset($_POST['range']))){
-$maxpricenew=$_POST['range'];
+  $maxpricenew=$_POST['range'];
 }else{$maxpricenew=$maxprice;}
 
 $categories=mysqli_query($link,"SELECT * FROM `categories`");
