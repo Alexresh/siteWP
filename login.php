@@ -6,7 +6,7 @@
     $query = mysqli_query($link,"SELECT * FROM `users` WHERE `email`='$email' AND `pass`='$pass'");
     $user = mysqli_fetch_assoc($query);
     if(count($user)==0){
-      echo "Такой пользователь не найден!";
+      echo 'Такой пользователь не найден! <a href="">Вернуться</>';
       exit();
     }
     setcookie('userid',$user['id'],time()+3600,"/");
@@ -19,13 +19,36 @@
   <head>
     <meta charset="utf-8">
     <title>Вход</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lobster&display=swap&subset=cyrillic" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
   </head>
-  <body>
-    <form action="login.php" method="post">
-      <input type="email" name="email" placeholder="e-mail"><br>
-      <input type="password" name="pass"><br>
-      <input type="submit" value="Войти">
-    </form>
-    <a href="/">Назад</a>
+  <body style="background-color:#e6e6e6">
+      <div class="header">
+        <div class="inner-header">
+          <div class="logo">
+            <a href="/" style="color:white;"><p>ProstoGames</p></a>
+          </div>
+          <div class="auth">
+            <?php
+              if(isset($_COOKIE['username'])){
+                echo '<p style="color:white; font-size:15px; font-family: Montserrat, sans-serif;">'.$_COOKIE['username'].'</p><p><a href="logout.php">Выход</a></p>';
+              }else{
+                echo '<p><a href="login.php">Вход</a></p><p><a href="registration.php">Регистрация</a></p>';
+              }
+             ?>
+
+          </div>
+        </div>
+      </div>
+    <div>
+      <form class="center" action="login.php" method="post">
+
+         <p class="text" style="height:20px; color:#595959">E-mail:</p> <input class="input" type="email" name="email"><br>
+        <p class="text" style="height:20px;  color:#595959">Пароль:</p> <input class="input" type="password" name="pass"><br>
+        <input class="submit" type="submit" value="Войти">
+      </form>
+    </div>
   </body>
 </html>

@@ -10,7 +10,7 @@
 $query=mysqli_query($link,"SELECT `name` AS `name` FROM `users` WHERE `email`='$email'");
 $username=mysqli_fetch_assoc($query)['name'];
 if(mb_strlen($username)>0){
-  echo "Ползователь с именем $username и данной почтой уже зарегистрирован";
+  echo "Пользователь с именем $username и данной почтой уже зарегистрирован";
   exit();
 }
 if($pass!=$cpass){
@@ -22,7 +22,7 @@ if($pass!=$cpass){
       mysqli_query($link, "INSERT INTO `users`(`email`,`steamid`,`name`,`surname`,`pass`) VALUES('$email','$steam','$name','$surname','$pass')");
       header("Location: /login.php");
     }else{
-      printf("Заполните поля!");
+      $error='!';
     }
 
   }
@@ -33,18 +33,44 @@ if($pass!=$cpass){
   <head>
     <meta charset="utf-8">
     <title>Регистрация</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lobster&display=swap&subset=cyrillic" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
   </head>
-  <body>
-<form action="registration.php" method="post">
-  <input type="email" name="email" placeholder="e-mail"><br>
-  <input type="text" name="name" placeholder="name"><br>
-  <input type="text" name="surname" placeholder="surname"><br>
-  <input type="password" name="pass"><br>
-  <input type="password" name="confirmpass"><br>
-  <input type="text" name="steam" placeholder="your steam"><br>
-  <input type="submit" value="зарегистрироваться">
-</form>
+  <body style="background-color:#e6e6e6">
+    <div class="header">
+      <div class="inner-header">
+        <div class="logo">
+          <a href="/" style="color:white;"><p>ProstoGames</p></a>
+        </div>
+        <div class="auth">
+          <?php
+            if(isset($_COOKIE['username'])){
+              echo '<p style="color:white; font-size:15px; font-family: Montserrat, sans-serif;">'.$_COOKIE['username'].'</p><p><a href="logout.php">Выход</a></p>';
+            }else{
+              echo '<p><a href="login.php">Вход</a></p><p><a href="registration.php">Регистрация</a></p>';
+            }
+           ?>
 
-<a href="/">Назад</a>
+        </div>
+      </div>
+    </div>
+    <form class="center" action="registration.php" method="post">
+      <?php
+      if($error=='!'){
+        echo '<p class="text" style="width:100%; color:#595959">Заполните поля</p><br>';
+      }
+       ?>
+      <p class="text" style="height:20px; color:#595959">E-mail:</p><input class="input" type="email" name="email"><br>
+      <p class="text" style="height:20px; color:#595959">Имя:</p><input class="input" type="text" name="name"><br>
+      <p class="text" style="height:20px; color:#595959">Фамилия:</p><input class="input" type="text" name="surname"><br>
+      <p class="text" style="height:20px; color:#595959">Пароль:</p><input class="input" type="password" name="pass"><br>
+      <p class="text" style="height:20px; color:#595959">Подтверждение:</p><input class="input" type="password" name="confirmpass"><br>
+      <p class="text" style="height:20px; color:#595959">Steam id:</p><input class="input" type="text" name="steam"><br>
+      <input class="submit" type="submit" value="Зарегистрироваться">
+
+      <div style="margin-top:30px"></div>
+    </form>
   </body>
 </html>

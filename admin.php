@@ -1,6 +1,7 @@
 <?php
 require 'db.php';
-$email=$_COOKIE["userid"];
+$userid=$_COOKIE["userid"];
+if(!isset($userid)) $userid=-1;
 $q=mysqli_query($link,"SELECT * FROM `users` WHERE `id`='$userid' AND `isAdmin`='1'");
 $user=mysqli_fetch_assoc($q);
 if(count($user)==0):
@@ -10,10 +11,31 @@ else:?>
 <html lang="ru" dir="ltr">
   <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lobster&display=swap&subset=cyrillic" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
     <title>Админ-панель</title>
   </head>
   <body>
-    <a href="/">Назад</a><br>
+    <div class="wrapper">
+      <div class="header">
+        <div class="inner-header">
+          <div class="logo">
+            <a href="/" style="color:white;"><p>ProstoGames</p></a>
+          </div>
+          <div class="auth">
+            <?php
+              if(isset($_COOKIE['username'])){
+                echo '<p style="color:white; font-size:15px; font-family: Montserrat, sans-serif;">'.$_COOKIE['username'].'</p><p><a href="logout.php">Выход</a></p>';
+              }else{
+                echo '<p><a href="login.php">Вход</a></p><p><a href="registration.php">Регистрация</a></p>';
+              }
+             ?>
+
+          </div>
+        </div>
+      </div>
     <div style="float:left;padding: 10px; border:1px black solid;">
       <p>Добавление товара:</p>
       <form action="admin.php" method="post">
@@ -22,7 +44,7 @@ else:?>
         <p>Полное описание(до 500 символов):</p><textarea name="descriptions" rows="8" cols="50"></textarea>
         <p>Год выпуска:</p><input type="number" name="year" value="2019">
         <p>Платформы(до 100 символов):</p><input type="text" name="platforms">
-        <p>Путь до картинки:</p><input type="text" name="image" value="/img/">
+        <p>Название картинки:</p><input type="text" name="image" value="">
         <p>Цена:</p><input type="number" name="price">
         <p>Категория:</p><input type="number" name="categories_id" value="1">
         <p style="font-size:15px">1-Экшен; 2-Аркады; 3-Симуляторы; 4-Стратегии;<br> 5-Приключения; 6-Музыкальные игры; <br>7-Ролевые игры; 8-Головоломки</p>
