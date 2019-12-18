@@ -42,7 +42,6 @@
           </div>
         </div>
       </div>
-    <div>
       <form class="center" action="login.php" method="post">
 
          <p class="text" style="height:20px; color:#595959">E-mail:</p> <input class="input" type="email" name="email"><br>

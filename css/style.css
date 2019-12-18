@@ -71,8 +71,13 @@ body{
   width: 13%;
   float: left;
 }
-.footer{
-
+.container{
+  margin: 20px;
+  color:#6a6a6a;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 15pt;
+  float: right;
+  width: 70%;
 }
 .logo{
   width: 120px;

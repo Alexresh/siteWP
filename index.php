@@ -57,7 +57,7 @@ $current_category=$_GET['cur_cat'];
             <form class="form1" action="index.php" method="get">
               <span style="  font-family: 'Montserrat', sans-serif;">Категории</span>
               <ul id="categories">
-                <li> <a href=""><span>Все игры</span></a></li>
+                <li> <a href="/"><span>Все игры</span></a></li>
                 <li><a href="?cat=1"><span>Экшен</span></a></li>
                 <li><a href="?cat=2"><span>Аркады</span></a></li>
                 <li><a href="?cat=3"><span>Симуляторы</span></a></li>
@@ -137,7 +137,7 @@ $current_category=$_GET['cur_cat'];
                 echo '
                 <form action="addtocart.php" method="post">
                 <input type="hidden" name="gameid" value="'. $game['id'] .'">
-                <div class="card">
+                <div class="card" onclick="gotogame(' . $game['id']. ')">
                    <div class="inner-card">
                      <div class="imgCard">
                       <img src="img/' . $game['image'] .'" width="100%" height="100%">

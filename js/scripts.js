@@ -14,3 +14,6 @@ function gotoVaness(){
 function gotoSanya(){
   location.href = 'https://vk.com/alexresh52';
 }
+function gotogame(id){
+  location="game.php?game="+id;
+}

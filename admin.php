@@ -103,10 +103,64 @@ else:?>
         if(isset($_POST['delid'])){
           $delid=$_POST['delid'];
           mysqli_query($link,"DELETE FROM `games` WHERE `id`='$delid'");
-
-
         }
         ?>
+    </div>
+    <div style="padding:10px; margin-left:15px; float:left; border:1px solid">
+      <form action="admin.php" method="post">
+        <p>Редактирование:</p>
+        <p>Введите название:</p>
+        <input type="text" name="itemname">
+        <input type="submit" value="Показать данные">
+        <?php
+          if(isset($_POST['itemname'])){
+            $kk=$_POST['itemname'];
+            $newItem=mysqli_fetch_assoc(mysqli_query($link,"SELECT * FROM `games` WHERE `name`='$kk'"));
+            echo '
+              <input type="number" name="uid" hidden value="'.$newItem['id'].'">
+              <p>Имя:<input type="text" name="Uname" value="'.$newItem['name'].'"></p>
+              <p>Небольшое описание:<textarea name="UsmallDescriptions" rows="8" cols="30">'.$newItem['smallDescriptions'].'</textarea></p>
+              <p>Описание:<textarea name="Udescriptions" rows="8" cols="30">'.$newItem['descriptions'].'</textarea></p>
+              <p>Год:<input type="number" name="Uyear" value="'.$newItem['year'].'"></p>
+              <p>Платформы:<input type="text" name="Uplatforms" value="'.$newItem['platforms'].'"></p>
+              <p>Картинка:<input type="text" name="Uimage" value="'.$newItem['image'].'"></p>
+              ';
+              $dir = "img";
+              $images=array_slice(scandir($dir),2);
+              foreach ($images as $key) {
+                echo '<img src="img/'.$key.'" width="70px"><span>'.$key.'</span><br>';
+              }
+              echo '
+              <p>Цена:<input type="number" name="Uprice" value="'.$newItem['price'].'"></p>
+              <p>Категория:<input type="number" name="Ucategories_id" value="'.$newItem['categories_id'].'"></p>
+              <p style="font-size:15px">1-Экшен; 2-Аркады; 3-Симуляторы; 4-Стратегии;<br> 5-Приключения; 6-Музыкальные игры; <br>7-Ролевые игры; 8-Головоломки</p>
+              <input type="submit" value="Обновить">';
+          }
+        ?>
+
+
+      </form>
+      <?php
+        if(isset($_POST['Uname'])){
+          $uid=$_POST['uid'];
+          $uname=$_POST['Uname'];
+          $usmallDescriptions=$_POST['UsmallDescriptions'];
+          $udescriptions=$_POST['Udescriptions'];
+          $uyear=$_POST['Uyear'];
+          $uplatforms=$_POST['Uplatforms'];
+          $uimage=$_POST['Uimage'];
+          $uprice=$_POST['Uprice'];
+          $ucatgories_id=$_POST['Ucategories_id'];
+          mysqli_query($link,"UPDATE `games` SET `name`='$uname',
+                                           `smallDescriptions`='$usmallDescriptions',
+                                           `descriptions`='$udescriptions',
+                                           `year`='$uyear',
+                                           `platforms`='$uplatforms',
+                                           `image`='$uimage',
+                                           `price`='$uprice',
+                                           `categories_id`='$ucatgories_id'  WHERE `id`='$uid'");
+        }
+       ?>
     </div>
 
   </body>
